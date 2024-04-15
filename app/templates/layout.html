@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <!--title>about</title-->
+    {% if title %} <!-- run if title provided-->
+     <title>about Page -{{title}}</title> 
+     {% else %}
+     <title>Blog about page </title> <!--default title-->
+     {% endif %}
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+</head>
+<body>
+<!--creating the block , Block is a section that a child template can override-->
+
+{% block content %} {% endblock %}
+
+<!--in our home and about we can inherit it and then override content secction which is uique to each page-->
+
+</body>
+</html> 

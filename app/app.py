@@ -38,7 +38,7 @@ def home():
 @app.route('/about')
 def about():
     #return '<h1>Hello, this is flask app!</h1>'
-    return render_template('about.html')
+    return render_template('about.html',title='About')
 
 
 if __name__ == '__main__':
