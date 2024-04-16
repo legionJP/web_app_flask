@@ -1,9 +1,8 @@
-from flask import Flask,render_template
+from flask import Flask, render_template
 
 # app= Flask(__name__) #creatimg app variable Flask  and setiing it as a instance of class Flask 
 
 #__name__ module will be equal to __main__ if be run the our py app directly 
-
 #creating the route , by using app decorator 
 
 # @app.route("/") #forward / is route page of our web
