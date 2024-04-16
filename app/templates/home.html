@@ -1,19 +1,29 @@
-{%extends "layout.html" %} <!-- using the layout page by extends keyword-->
+{%extends "layout.html" %} <!-- inheriting  the layout page by extends keyword-->
 
 {% block content %}<!--then overriding the content block of the for loop-->
 
-{% for post in posts %}
-<h1> {{post.title}}</h1>
-<p> By {{post.author}} on {{post.date_posted}}</p>
-<p>{{post.content}}</p>
-{% endfor %}
+    {% for post in posts %}
+    <article class="media content-section">
+        <div class="media-body">
+            <div class="article-metadata">
+                <a class="mr-2" href="#">{{post.author}}</a>
+                <small class="text-muted">{{post.date_posted}}</small>
+            </div>
+            <h2><a class="article-title" href="#">{{post.title}}</a></h2>
+            <p class="'article-content">{{post.content}}</p>
+        </div>
+    </article>
+            
+    {% endfor %}
 
 {% endblock content %} <!--jinja allows to put the name of block as expilicit-->
 
 
-
-
-
+<!-- 
+<h1> {{post.title}}</h1>
+<p> By {{post.author}} on {{post.date_posted}}</p>
+<p>{{post.content}}</p>
+ -->
 
 
 

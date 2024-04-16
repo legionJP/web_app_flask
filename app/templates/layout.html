@@ -5,7 +5,7 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
 <!--Css bootsrap-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-   
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='main.css')}}">
     <!--title>about</title-->
     {% if title %} <!-- run if title provided-->
      <title>about Page -{{title}}</title> 
@@ -16,16 +16,78 @@
 </head>
 <body>
 
-<!--creating the block , Block is a section that a child template can override-->
-<!--using the container div class-->
-
-<div class="container">
-    {% block content %} {% endblock %}
+<div class ="nav-class">
+    <nav class ="menu">
+<ul>
+    <li><a href="/#">Menu</a></li>
+    <li><a href="/Home">home</a></li>
+    <li><a href="/about">About</a></li>
+</ul>
+    </nav>
 </div>
+ 
+<!--Navbar center -->
+<header class ="site-header">
+    <nav class="navbar navnar-expand-md navbar-dark bg-steel fixed-top">
+        <div class ="container">
+            <a class="navbar-dark mr-4" href="/">Your Blogs</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbar-toggler" aria-expanded="false" aria-label="Toggle -navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarToggle">
+                <div class="navbar-nav mr-auto">
+                <a class="nav-time nav-link" href="/">Home</a>
+                <a class="nav-time nav-link" href="/about">About</a>
+                 </div>
+            <!-- Navbar Right Side -->
+                    <div class="navbar-nav">
+                    <a class="nav-item nav-link" href="/login">Login</a>
+                    <a class="nav-item nav-link" href="/register">Register</a>
+                    </div>
+            </div>        
+        </div>
+    </nav>
+
+</header>
+
+<main role="main" class="container">
+    <div class="row">
+        <div class="col-md-8">
+            {% block content %} {% endblock %}  
+        </div>
+
+        <div class="col-md-4">
+            <div class="content-section">
+                <h3> Sidebar</h3>
+                <p class="text-muted"> You can put info about the blog,  So what's! in your mind. 
+                    
+                    <ul class="list-group">
+                        <li class="list-group-itme list-group-itme-light">Latest Posts</li>
+                        <li class="list-group-itme list-group-itme-light">Annoucements</li>
+                        <li class="list-group-itme list-group-itme-light">Calender/Events</li>
+                        <li class="list-group-itme list-group-itme-light">Other Sources</li>
+                    </ul>
+                </p>
+            </div>
+        </div>
+
+    </div>
 
 
+</main>
+
+
+<!--creating the block , Block is a section that a child template can override-->
+<!--using the container div class
+
+</div>
+-->
+
+
+
+<!--js script-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-
+    
 <!--in our home and about we can inherit it and then override content secction which is uique to each page-->
 
 </body>
