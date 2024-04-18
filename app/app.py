@@ -8,13 +8,19 @@
 
 from flask import Flask, render_template,url_for , flash ,redirect
 from forms import RegistrationForm, LoginForm
- 
+from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__,template_folder='templates')
 
 app.config['SECRET_KEY'] = '571feb486e78c8e055ade270a8e5fc'
 
-#making the list of dict for the post data
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'  #/// are the relative path from the current file so site.db will be created
+db=SQLAlchemy(app) #setting up the instance , and app is argument
 
+'''
+In SQLAlchemy we can represents data structures as class called Models
+'''
+
+#making the list of dict for the post data
 posts = [
     {
         'author':'AK',
