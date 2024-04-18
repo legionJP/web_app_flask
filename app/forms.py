@@ -1,22 +1,24 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField,BooleanField
-from wtforms.validators import data_required, Length, Email, EqualTo
+from wtforms.validators import DataRequired , Length, Email, EqualTo
 
 class RegistrationForm(FlaskForm):
-    username= StringField('Username',validators=[data_required(),Length(min=2,max=20)])
+    username= StringField('Username',validators=[ DataRequired(),Length(min=2,max=20)])
 
-    email= StringField('Email', validators=[data_required(),Email])
+    email= StringField('Email', validators=[ DataRequired(),Email()])
 
-    password = PasswordField('Password', validators=[data_required(),Length(min=5)])
-    password_confirm =PasswordField('Confirm Password', validators=[data_required(), EqualTo('password')])
+    password = PasswordField('Password', 
+                             validators=[DataRequired(),Length(min=5)])
+    confirm_password =PasswordField('Confirm Password', 
+                                    validators= [DataRequired(), EqualTo('password')])
 
     submit =SubmitField('Sign up')
  
 class LoginForm(FlaskForm):
     # username= StringField('Username',validators=[data_required(),Length(min=2,max=20)])
-    email= StringField('Email', validators=[data_required(),Email])
+    email= StringField('Email', validators=[DataRequired(),Email()])
 
-    password = PasswordField('Password', validators=[data_required(),Length(min=5)])
+    password = PasswordField('Password', validators=[DataRequired(),Length(min=5)])
     remeber = BooleanField('Remeber me')
 
     submit =SubmitField('Login')

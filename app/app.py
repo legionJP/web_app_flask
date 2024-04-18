@@ -6,8 +6,9 @@
 # @app.route("/") #forward / is route page of our web
 
 
-from flask import Flask, render_template,url_for
+from flask import Flask, render_template,url_for , flash ,redirect
 from forms import RegistrationForm, LoginForm
+ 
 app = Flask(__name__,template_folder='templates')
 
 app.config['SECRET_KEY'] = '571feb486e78c8e055ade270a8e5fc'
@@ -43,9 +44,13 @@ def about():
     return render_template('about.html',title='About')
 
 
-@app.route('/register')
+@app.route('/register', methods=['GET','POST'])
 def register():
     form=RegistrationForm()
+    if form.validate_on_submit():
+        flash(f'Account createed  for {form.username.data}!','success') #flask message flash , and bootstrap class  "success"
+        return redirect(url_for('home'))
+    
     return render_template('register.html',title='Register',form=form)
 
 
