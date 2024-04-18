@@ -1,13 +1,12 @@
 {%extends "layout.html" %}
 
-{%block content %}
+{% block content %}
 
 <div class "content-section" >
     <form method="post" ,action=""> <!--action with empty string means it is gonna post info  back to same mehtod -->
      {{ form.hidden_tag() }} <!--the form.hidden tag method used to add CSRF token to protect form from attacks -->
      <fieldset class="form-group">
         <legend class="border-bottom mb-4">Join Now</legend>
-
         <div class="form-group">
             {{ form.username.label(class="form-control-label") }} <!--it is only printing the form lable -->
             {{ form.username(class="form-control form-control-lg") }}
@@ -30,7 +29,7 @@
      </fieldset>
 
      <div class="form-group">
-        {{ form.submit(class="btn-outline-info") }}
+        {{ form.submit(class=" btn btn-outline-info") }}
 
      </div>
     </form>
@@ -45,4 +44,4 @@
     </small>
 </div>
 
-{%endblock content %}
+{% endblock content %}
