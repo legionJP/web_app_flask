@@ -19,7 +19,7 @@ class LoginForm(FlaskForm):
     email= StringField('Email', validators=[DataRequired(),Email()])
 
     password = PasswordField('Password', validators=[DataRequired(),Length(min=5)])
-    remeber = BooleanField('Remeber me')
+    remember = BooleanField('Remeber me')
 
     submit =SubmitField('Login')
  
