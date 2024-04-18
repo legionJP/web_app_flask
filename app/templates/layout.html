@@ -34,11 +34,11 @@
             <!-- <a class="navbar-dark mr-4" href="/Home">Home</a>
             <a class="navbar-dark mr-4" href="/">Your Blogs</a>
             <a class="navbar-dark mr-4" href="/about">about</a> -->
-            <a class="nav-item nav-link" href="/Home">Home</a>
+            <a class="nav-item nav-link" href="{{ url_for('home') }}">Home</a>
             <a class="nav-item nav-link" href="/">Your Blogs</a>
-            <a class="nav-item nav-link" href="/login">Login</a>
-            <a class="nav-item nav-link" href="/register">Register</a>
-            <a class="nav-item nav-link" href="/about">about</a>
+            <a class="nav-item nav-link" href="{{ url_for('login') }}">Login</a>
+            <a class="nav-item nav-link" href="{{ url_for('register') }}">Register</a>
+            <a class="nav-item nav-link" href="{{ url_for('about') }}">about</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbar-toggler" aria-expanded="false" aria-label="Toggle -navigation">
             <span class="navbar-toggler-icon"></span>
             </button>
