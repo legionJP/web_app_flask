@@ -10,3 +10,50 @@ with app.app_context():
 
 from app import User , Post #importing the User and post class 
 
+user1= User(username='JPs',email= 'jppal12@gmail.com', password='password')
+db.session.add(user1)
+user2 =User(username='Swamis', email='snand12@gmail.com',password='password')
+db.session.add(user2)
+db.session.commit()
+User.query.all()
+
+User.query.first()
+User.query.filter_by(username='jp').all()
+User.query.filter_by(username='jp').first()  #get the user with no list 
+
+#capturing the user in varriable
+user = User.query.filter_by(username='JP').first()
+user
+user.id
+user.query.get(1)
+
+from app import db , Post
+with app.app_context():
+post_1=Post(title='Blog_1',content ='First post of the blog', user_id= 1)
+    db.session.add(post_1)
+    post_2=Post(title='Blog_2',content ='Second post of the blog', user_id= 2)    
+    db.session.add(post_2)
+    db.session.commit()
+    
+
+
+user.posts # see the posts results 
+
+for post in user.posts:
+    print(post.title)
+
+post = post.query.first()
+
+post
+#shows the post rows..
+
+post.user_id
+
+post.author 
+#get the enitre object as in User Models it is using as a  bacref
+
+db.drop_all()
+
+db.create_all()
+User.query.all()
+Post.query.all()
