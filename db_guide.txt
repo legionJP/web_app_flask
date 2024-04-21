@@ -1,0 +1,12 @@
+from app import python
+from app import db   
+#creating the db.site 
+
+with app.app_context():
+
+    # You can use Flask's functionality here
+ db.create_all()
+'''
+
+from app import User , Post #importing the User and post class 
+

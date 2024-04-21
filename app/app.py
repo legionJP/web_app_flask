@@ -18,10 +18,11 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 
 db=SQLAlchemy(app) #setting up the instance , and app is argument
 # db.init_app(app)
-with app.app_context():
+# with app.app_context():
 
-    # You can use Flask's functionality here
- db.create_all()
+#     # You can use Flask's functionality here
+#  db.create_all()
+
 '''
 In SQLAlchemy we can represents data structures as class called Models
 '''
@@ -52,6 +53,23 @@ class Post(db.Model):
 
     def __repr__(self) -> str:
         return f"Post('{self.title}', '{self.date_posted}')"
+    
+with app.app_context():
+    # db.create_all()
+    # user1= User(username='JPs',email= 'jppal12@gmail.com', password='password')
+    # db.session.add(user1)
+    # user2 =User(username='Swamis', email='snand12@gmail.com',password='password')
+    # db.session.add(user2)
+    # db.session.commit()
+    User.query.all()
+
+
+    # You can use Flask's functionality here
+
+
+
+
+
 
 
 #making the list of dict for the post data
