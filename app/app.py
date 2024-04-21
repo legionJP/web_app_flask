@@ -11,12 +11,17 @@ from forms import RegistrationForm, LoginForm
 from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__,template_folder='templates')
 
-app.config['SECRET_KEY'] = '571feb486e78c8e055ade270a8e5fc'
 
+app.config['SECRET_KEY'] = '571feb486e78c8e055ade270a8e5fc'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 #/// are the relative path from the current file so site.db will be created
-db=SQLAlchemy(app) #setting up the instance , and app is argument
 
+db=SQLAlchemy(app) #setting up the instance , and app is argument
+# db.init_app(app)
+with app.app_context():
+
+    # You can use Flask's functionality here
+ db.create_all()
 '''
 In SQLAlchemy we can represents data structures as class called Models
 '''
@@ -28,7 +33,8 @@ class User(db.Model):
     email = db.Column(db.String(100), unique = True , nullable= False)
     image_file =db.Column(db.String(20), nullable =False, default = 'default.jpg')
     password = db.Column(db.String(60), nullable=False)
-    posts= db.relationship('Post', backref = 'author' , lazy = True)  # 'Post' becaue it using Post module class
+    posts= db.relationship('Post', backref = 'author' , lazy = True)
+    # 'Post' becaue it using Post module class
     #one to many relationship and this is not column but running the query in additional
 
     def __repr__(self) -> str: #will return the data of the objects to how it is going to print
@@ -39,9 +45,9 @@ import datetime
 class Post(db.Model):
     id=db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(120), nullable =False)
-    date_posted = db.Column(db.DateTime, nullable = False , default = datetime.datetime.utcnow())
+    date_posted = db.Column(db.DateTime, nullable = False , default = datetime.UTC)
     content = db. Column(db.Text ,nullable = False)
-    user_id = db.Column(db.Integer, db.ForeignKey(('user.id'), nullable = False)) #user_id is refe. to table name and column name 
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'),nullable =False) #user_id is refe. to table name and column name 
 
 
     def __repr__(self) -> str:
