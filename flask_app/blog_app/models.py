@@ -1,13 +1,24 @@
-import app
+
+#==================================================================================================#
 # from app import db   
 # to cop with the circular import use:
-from __main__ import db #for this import the USER and Model in app.py after the db var.
+# from __main__ import db #for this import the USER and Model in app.py after the db var.
 
+# db.init_app(app)
+# with app.app_context():
+
+#     # You can use Flask's functionality here
+#  db.create_all()
+
+#================================================================================================#
+'''
+In SQLAlchemy we can represents data structures as class called Models
+'''
+
+from blog_app import db ,app
 from datetime import datetime  
 from sqlalchemy.sql import func
  
-
-
 #creating model class for user model
 
 class User(db.Model):
@@ -43,28 +54,28 @@ class Post(db.Model):
 #--------------------------------------------------------
 
 from sqlalchemy.exc import IntegrityError   
-# with app.app_context():
-db.create_all()
-user1= User(username='user11',email= 'user11@gmail.com', password='password')
-user2 =User(username='User21', email='user21@gmail.com',password='password')
-db.session.add(user1)
-db.session.add(user2)    
-try:
-    db.session.commit()
-except IntegrityError:
-    db.session.rollback()
-    
-post_1=Post(title='Blog_11',content ='First post of the blog', user_id= user1.id)
-post_2=Post(title='Blog_22',content ='Second post of the blog', user_id= user2.id)
-db.session.add(post_1)
-db.session.add(post_2)
-try:
-    db.session.commit()
-except IntegrityError:
-    db.session.rollback()
-# User.query.all()    
-# Post.query.all()
-# db.drop_all()
+with app.app_context():
+    db.create_all()
+    user1= User(username='user11',email= 'user11@gmail.com', password='password')
+    user2 =User(username='User21', email='user21@gmail.com',password='password')
+    db.session.add(user1)
+    db.session.add(user2)    
+    try:
+       db.session.commit()
+    except IntegrityError:
+       db.session.rollback()
+
+    post_1=Post(title='Blog_11',content ='First post of the blog', user_id= user1.id)
+    post_2=Post(title='Blog_22',content ='Second post of the blog', user_id= user2.id)
+    db.session.add(post_1)
+    db.session.add(post_2)
+    try:
+      db.session.commit()
+    except IntegrityError:
+      db.session.rollback()
+    # User.query.all()    
+    # Post.query.all()
+    # db.drop_all()
      
 
 #=========================================================================================================#

@@ -1,37 +1,8 @@
 
-# app= Flask(__name__) #creatimg app variable Flask  and setiing it as a instance of class Flask 
-
-#__name__ module will be equal to __main__ if be run the our py app directly 
-#creating the route , by using app decorator 
-# @app.route("/") #forward / is route page of our web
-
-
 from flask import Flask, render_template,url_for , flash ,redirect
-from forms import RegistrationForm, LoginForm
-from flask_sqlalchemy import SQLAlchemy
+from blog_app.forms import RegistrationForm, LoginForm
+from blog_app import app
 
-
-
-app = Flask(__name__,template_folder='templates')
-
-app.config['SECRET_KEY'] = '571feb486e78c8e055ade270a8e5fc'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
-#/// are the relative path from the current file so site.db will be created
-
-db=SQLAlchemy(app) #setting up the instance , and app is argument
-import models 
-from models import User , Post
- 
-# db.init_app(app)
-# with app.app_context():
-
-#     # You can use Flask's functionality here
-#  db.create_all()
-
-'''
-In SQLAlchemy we can represents data structures as class called Models
-'''
- 
 
 #making the list of dict for the post data
 posts = [
@@ -84,6 +55,3 @@ def login():
     return render_template('login.html',title='Login',form=form)
 
 
-
-if __name__ == '__main__':
-    app.run(debug=True) # it is equal to set DEBUG = 1
