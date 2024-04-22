@@ -1,8 +1,8 @@
 
-from flask import Flask, render_template,url_for , flash ,redirect
-from blog_app.forms import RegistrationForm, LoginForm
+from flask import  render_template,url_for , flash ,redirect
+from   blog_app.forms import RegistrationForm, LoginForm
+from  blog_app.models import User, Post
 from blog_app import app
-
 
 #making the list of dict for the post data
 posts = [
