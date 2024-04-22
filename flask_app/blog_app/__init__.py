@@ -7,6 +7,8 @@
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_bcrypt import Bcrypt
+
 
 app = Flask(__name__,template_folder='templates')
 
@@ -15,6 +17,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 #/// are the relative path from the current file so site.db will be created
 
 db=SQLAlchemy(app) #setting up the instance , and app is argument
+bcrypt = Bcrypt(app) #for password hashing 
  
 # from routes import routes
-from  blog_app import routes
+from   blog_app import routes
+from  __init__ import routes

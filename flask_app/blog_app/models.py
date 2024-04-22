@@ -53,7 +53,7 @@ class Post(db.Model):
 #Adding the data on site.db file in User and Post Model
 #--------------------------------------------------------
 
-from sqlalchemy.exc import IntegrityError   
+#from sqlalchemy.exc import IntegrityError   
 #with app.app_context():
     # # db.create_all()
     # user1= User(username='user10',email= 'user10@gmail.com', password='password')

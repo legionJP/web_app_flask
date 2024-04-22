@@ -2,7 +2,8 @@
 from flask import  render_template,url_for , flash ,redirect
 from   blog_app.forms import RegistrationForm, LoginForm
 from  blog_app.models import User, Post
-from blog_app import app
+from blog_app import app, db , bcrypt
+
 
 #making the list of dict for the post data
 posts = [
@@ -38,8 +39,14 @@ def about():
 def register():
     form=RegistrationForm()
     if form.validate_on_submit():
-        flash(f'Account createed  for {form.username.data}!','success') #flask message flash , and bootstrap class  "success"
-        return redirect(url_for('home'))    
+        hashed_password= bcrypt.generate_password_hash(form.password.data).decode('utf-8') 
+        user=User(username=form.username.data, email= form.email.data, password= hashed_password) #stroing hashed password
+        db.session.add(user)
+        db.session.commit()
+        # flash(f'Account createed  for {form.username.data}!','success') #flask message flash , and bootstrap class  "success"
+        flash(f'Account createed  for {form.username.data}! now you can login ','success')
+        return redirect(url_for('login')) 
+           
     return render_template('register.html',title='Register',form=form)
 
 
