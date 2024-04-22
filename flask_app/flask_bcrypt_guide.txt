@@ -1,0 +1,47 @@
+You can using the flask-bcrypt for the password hashing ,
+popular hashing algorithm used in Flask (and other web applications) is Bcrypt. 
+Bcrypt is designed to be slow and computationally expensive,
+making it more difficult for attackers to guess or crack passwords.
+
+#======================================= GUIDE for Installation and Use ==============================#
+
+1. pip intall flask-bcrypt
+--------------------------
+
+2. - in cmd open python
+--------------------
+python
+
+>>> from flask_bcrypt import Bcrypt
+-----------------------------
+>>> bcrypt = Bcrypt()
+#making the instace of the Bacrypt class
+--------------------------------
+
+#generate the hash_paasword in byte
+------------------------------
+>>> bcrypt.generate_password_hash('testing') 
+b'$2b$12$piCNM.ya4hxqx4XKSMdy/eCHTjPgExRFd77cO8goHCLbr/CU0iXqu'
+
+
+#hash pass in  string :  every time it will generate random 
+-------------------------------------------------
+>>> bcrypt.generate_password_hash('testing').decode('utf-8') 
+'$2b$12$iLDki2Dgf0cVcCnmB5yHN.0LGqpZq1yeZMEHNLaJMRrfqYpan7MoS'
+
+>>> bcrypt.generate_password_hash('testing').decode('utf-8')
+'$2b$12$Vkww1s1j7Smrw6QfWmx.geQ/YK8QT7VzGCBkO0ye1gnhByPs5RgYG'
+
+# its generate random hash key so we have to use "check_password_hash" method 
+
+>>> hashed_pwd=bcrypt.generate_password_hash('testing').decode('utf-8')
+#making variable
+-----------------------------------------------------
+
+#checking the password
+-------------------------------
+>>> bcrypt.check_password_hash(hashed_pwd,'test')
+False
+
+>>> bcrypt.check_password_hash(hashed_pwd,'testing') 
+True
