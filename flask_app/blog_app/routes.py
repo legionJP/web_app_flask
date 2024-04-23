@@ -3,6 +3,7 @@ from flask import  render_template,url_for , flash ,redirect
 from   blog_app.forms import RegistrationForm, LoginForm
 from  blog_app.models import User, Post
 from blog_app import app, db , bcrypt
+from flask_login import login_user
 
 
 #making the list of dict for the post data
@@ -54,11 +55,15 @@ def register():
 def login():
     form=LoginForm()
     if form.validate_on_submit():
-        if form.email.data =='myblog@email.com' and form.password.data =='mypassword':
-            flash('You are now loged in ','success')
-            return redirect(url_for('home'))
-        else:
-            flash('Login Failed , Try again with right Password and username','danger')
-    return render_template('login.html',title='Login',form=form)
+        #if form.email.data =='myblog@email.com' and form.password.data =='mypassword':
+        user= User.query.filter_by(email=form.email.data).first()
+        if user and bcrypt.check_password_hash(user.password,form.password):
+            login_user(user,)
+
+
+         
+    
+        flash('Login Failed , Try again with right Password and username','danger')
+   return render_template('login.html',title='Login',form=form)
 
 

@@ -14,14 +14,24 @@
 '''
 In SQLAlchemy we can represents data structures as class called Models
 '''
-from blog_app import  app, db
+from blog_app import   db, login_manager #,app 
 from datetime import datetime  
 from sqlalchemy.sql import func
+from flask_login import UserMixin
 
- 
+
+
+@login_manager.user_loader # this is decorator for querying user_id , and The function you set should take a user ID
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+#above extenstion will inspect the user model with four aspect 1. to be exact one(authenticate) returns true if match
+#2. is active 3. is_anonymous 4. get_id method . The class method for all these is UserMixin
+
+
 #creating model class for user model
 
-class User(db.Model):
+class User(db.Model,UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique = True , nullable= False)
     email = db.Column(db.String(100), unique = True , nullable= False)
@@ -54,8 +64,8 @@ class Post(db.Model):
 #--------------------------------------------------------
 
 #from sqlalchemy.exc import IntegrityError   
-with app.app_context():
-    db.create_all()
+# with app.app_context():
+#     db.create_all()
     # user1= User(username='user10',email= 'user10@gmail.com', password='password')
     # user2 =User(username='User12', email='user12@gmail.com',password='password')
     # db.session.add(user1)
