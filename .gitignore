@@ -1,2 +1,5 @@
 .venv
 SECRET_KEY
+__pycache__/
+instance/
+*.pyc
