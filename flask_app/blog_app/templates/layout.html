@@ -35,10 +35,16 @@
             <a class="navbar-dark mr-4" href="/">Your Blogs</a>
             <a class="navbar-dark mr-4" href="/about">about</a> -->
             <a class="nav-item nav-link text-white" href="{{ url_for('home') }}">Home</a>
-            <a class="nav-item nav-link text-white" href="/">Your Blogs</a>
-            <a class="nav-item nav-link text-white" href="{{ url_for('login') }}">Login</a>
-            <a class="nav-item nav-link text-white" href="{{ url_for('register') }}">Register</a>
             <a class="nav-item nav-link text-white" href="{{ url_for('about') }}">about</a>
+            <a class="nav-item nav-link text-white" href="/">Your Blogs</a>
+
+                {% if current_user.is_authenticated %}
+                <a class="nav-item nav-link text-white" href="{{ url_for('account') }}">Account</a>
+                <a class="nav-item nav-link text-white" href="{{ url_for('logout') }}">Logout</a>
+                {% else %}
+                    <a class="nav-item nav-link text-white" href="{{ url_for('login') }}">Login</a>
+                    <a class="nav-item nav-link text-white" href="{{ url_for('register') }}">Register</a>
+                {% endif %} 
 
             <nav class="navbar navbar-primary bg-primary">
                 <div class="container-fluid">
@@ -53,7 +59,7 @@
             <span class="navbar-toggler-icon"></span>
             </button> -->
             <div class="collapse" id="navbarToggleExternalContent">
-                <div class="bg-primary p-4">
+                <div class="bg-primary p-2">
                   <h5 class="text-white h4">Collapsed content</h5>
                   <span class="text-muted">Toggleable via the navbar brand.</span>
                 </div>

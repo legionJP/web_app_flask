@@ -23,6 +23,9 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 db=SQLAlchemy(app) #instance for sql db
 bcrypt = Bcrypt(app) #for password hashing 
 login_manager = LoginManager(app)
+login_manager.login_view = 'login' #setting the login route for login view to manage login required 
+login_manager.login_message_category ='info' #login message if access account without login 
+
 
  
 # from routes import routes
