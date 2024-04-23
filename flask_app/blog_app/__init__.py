@@ -4,7 +4,6 @@
 #creating the route , by using app decorator 
 # @app.route("/") #forward / is route page of our web
 
-
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
@@ -21,4 +20,4 @@ bcrypt = Bcrypt(app) #for password hashing
  
 # from routes import routes
 from   blog_app import routes
-from  __init__ import routes
+from  blog_app import routes

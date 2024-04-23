@@ -54,8 +54,8 @@ class Post(db.Model):
 #--------------------------------------------------------
 
 #from sqlalchemy.exc import IntegrityError   
-#with app.app_context():
-    # # db.create_all()
+with app.app_context():
+    db.create_all()
     # user1= User(username='user10',email= 'user10@gmail.com', password='password')
     # user2 =User(username='User12', email='user12@gmail.com',password='password')
     # db.session.add(user1)
