@@ -1,4 +1,5 @@
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileField , FileAllowed
 from flask_login import current_user
 from wtforms import StringField, PasswordField, SubmitField,BooleanField
 from wtforms.validators import DataRequired , Length, Email, EqualTo , ValidationError
@@ -17,16 +18,16 @@ class RegistrationForm(FlaskForm):
 
     submit =SubmitField('Sign up')
 
-#creating the template for validation 
+#creating the template for registration validation 
 
     def validate_username(self,username):
-        user = User.query.get(username.data)
-        if User:
+        user = User.query.filter_by( username=username.data).first()
+        if user:
             raise ValidationError('This username is taken , please choose another one')
         
     def validate_email(self,email):
-        user = User.query.get(email.data)
-        if User:
+        user = User.query.filter_by(email=email.data).first()
+        if user:
             raise ValidationError('The email is already in use, please choose another one')
         
 
@@ -56,6 +57,8 @@ class UpdateAccountForm(FlaskForm):
 
     email= StringField('Email', validators=[ DataRequired(),Email()])
 
+    picture = FileField('Update Profile Picture', validators=[FileAllowed(['jpg','png'])])
+
     submit =SubmitField('Update')
 
     #creating the template for validation 
@@ -64,13 +67,13 @@ class UpdateAccountForm(FlaskForm):
        # user = User.query.filter_by(username.data.first()
         if username.data != current_user.username:    # not validate when current username is equal to  update username 
             user = User.query.get(username.data)
-            if User:
+            if user:
                 raise ValidationError('This username is taken , please choose another one')
         
     def validate_email(self,email):
         if email.data != current_user.email:                
             user = User.query.get(email.data)
-            if User:
+            if user:
                 raise ValidationError('The email is already in use, please choose another one')
             
 
