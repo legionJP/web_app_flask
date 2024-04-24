@@ -9,36 +9,36 @@ from blog_app import app, db , bcrypt
 from flask_login import login_user, current_user, logout_user, login_required
 
 
-#making the list of dict for the post data
-posts = [
-    {
-        'author':'AK',
-        'title':'Blog post 2',
-        'content':'content of ak  Post will appear here',
-        'date_posted':'April 15 , 2024'        
-    },
-    { 
-        'author':'JP',
-        'title':'Blog post 1',
-        'content':'First Post Content',
-        'date_posted':'April 15 , 2024'
-    }
-]
+# #making the list of dict for the post data
+# posts = [
+#     {
+#         'author':'AK',
+#         'title':'Blog post 2',
+#         'content':'content of ak  Post will appear here',
+#         'date_posted':'April 15 , 2024'        
+#     },
+#     { 
+#         'author':'JP',
+#         'title':'Blog post 1',
+#         'content':'First Post Content',
+#         'date_posted':'April 15 , 2024'
+#     }
+#]
 
-
+#-------------------------------------------------------------------------------------------------------------------------
 @app.route('/')
-@app.route('/H+ome') # adding the multiple route within one fun using the  decorator
+@app.route('/home') # adding the multiple route within one fun using the  decorator
 def home():
-    #return '<h1>Home Page</h1>'
+    posts=Post.query.all()
     return render_template('home.html',posts = posts) #passing the var to template so the data of posts will be equal to post data
 
-
+#------------------------------------------------------------------------------------------
 @app.route('/about')
 def about():
     #return '<h1>Hello, this is flask app!</h1>'
     return render_template('about.html',title='About')
 
-
+#-----------------------------------------------------------------------------------------------------
 @app.route('/register', methods=['GET','POST'])
 def register():
     if current_user.is_authenticated:
@@ -51,10 +51,9 @@ def register():
         db.session.commit()
         # flash(f'Account createed  for {form.username.data}!','success') #flask message flash , and bootstrap class  "success"
         flash(f'Account createed  for {form.username.data}! now you can login ','success')
-        return redirect(url_for('login')) 
-           
+        return redirect(url_for('login'))            
     return render_template('register.html',title='Register',form=form)
-
+#-------------------------------------------------------------------------------------------------
 
 @app.route('/login',methods=['GET', 'POST'])
 def login():
@@ -71,7 +70,7 @@ def login():
         else:
             flash('Login Failed , Try again with right Password and username','danger')
     return render_template('login.html',title='Login',form=form)
-
+#--------------------------------------------------------------------------------------------
 
 @app.route('/logout')
 def logout():
@@ -88,9 +87,9 @@ def save_picture(form_picture):
     picture_path = os.path.join(app.root_path, 'static/profile_pics', picture_fn)
 
     #for converting picture in small file
-    ouput_size = (125,125)
+    output_size = (125,125)
     i = Image.open(form_picture)
-    i.thumbnail(ouput_size)
+    i.thumbnail(output_size)
     i.save(picture_path)
    # form_picture.save(picture_path)
 
@@ -130,7 +129,9 @@ def new_post():
     form = PostForm()
     if form.validate_on_submit():
         #adding the post on the database
-        
+        post= Post(title=form.title.data, content = form.content.data, author= current_user)
+        db.session.add(post)
+        db.session.commit()        
         flash('Your post has been created !', 'success')
         return redirect(url_for('home'))
     return render_template('create_post.html', title='New Post', form=form)
