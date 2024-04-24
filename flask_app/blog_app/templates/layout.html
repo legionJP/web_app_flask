@@ -40,6 +40,7 @@
             <a class="nav-item nav-link text-white" href="/">Your Blogs</a>
 
                 {% if current_user.is_authenticated %}
+                <a class="nav-item nav-link text-white" href="{{ url_for('new_post') }}">New Post</a>
                 <a class="nav-item nav-link text-white" href="{{ url_for('account') }}">Account</a>
                 <a class="nav-item nav-link text-white" href="{{ url_for('logout') }}">Logout</a>
                 {% else %}
@@ -131,7 +132,8 @@
 
 <!--js script-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/autosize.js/4.0.2/autosize.min.js"></script>    
 <!--in our home and about we can inherit it and then override content secction which is uique to each page-->
 
 </body>

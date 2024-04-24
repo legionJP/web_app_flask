@@ -3,7 +3,7 @@ import os
 import secrets #for random image name 
 from PIL import Image
 from flask import  render_template,url_for , flash ,redirect , request
-from   blog_app.forms import RegistrationForm, LoginForm, UpdateAccountForm
+from   blog_app.forms import RegistrationForm, LoginForm, UpdateAccountForm,PostForm
 from  blog_app.models import User, Post
 from blog_app import app, db , bcrypt
 from flask_login import login_user, current_user, logout_user, login_required
@@ -121,3 +121,16 @@ def account():
     return render_template('account.html', title='Account', 
                            image_file=image_file, form=form) #breaking line in pep 8 compline 
 
+#------------------------------------------------------------------------------
+
+
+@app.route('/post/new', methods =['GET', 'POST'])
+@login_required
+def new_post():
+    form = PostForm()
+    if form.validate_on_submit():
+        #adding the post on the database
+        
+        flash('Your post has been created !', 'success')
+        return redirect(url_for('home'))
+    return render_template('create_post.html', title='New Post', form=form)

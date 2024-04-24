@@ -1,0 +1,48 @@
+
+{%extends "layout.html" %}  
+
+{% block content %} 
+
+<div class "content-section" >
+    <form method="post" ,action=""> <!--action with empty string means it is gonna post info  back to same mehtod -->
+     {{ form.hidden_tag() }} <!--the form.hidden tag method used to add CSRF token to protect form from attacks -->
+     <fieldset class="form-group">
+        <legend class="border-bottom mb-4 , border-top , border p-2">New Post</legend>
+
+        <div class="form-group">
+            {{ form.title.label(class="form-control-label") }} <!--it is only printing the form lable -->
+            {% if form.title.errors %} <!--Error validations-->
+            {{ form.title(class="form-control form-control-lg is-invalid") }} <!--username filed-->
+            <div class="invalid-feedback">
+                {% for error in form.title.errors %}
+                <span> {{ error }}</span>
+                {% endfor %}
+            </div>
+        {% else %}
+            {{ form.title(class="form-control form-control-lg") }}    
+        {% endif %}
+        </div>
+
+        <div class="form-group">
+        {{ form.content.label(class="form-control-label") }} <!--it is only printing the form lable -->
+        {% if form.content.errors %} <!--Error validations-->
+        {{ form.content(class="form-control form-control-lg is-invalid") }} <!--username filed-->            
+        <div class="invalid-feedback">
+        {% for error in form.content.errors %}
+        <span> {{ error }}</span>
+        {% endfor %}
+        </div>
+        {% else %}
+            {{ form.content(class="form-control form-control-lg") }}    
+        {% endif %}
+        </div>
+     </fieldset>
+
+     <div class="form-group">
+        {{ form.submit(class="btn btn-outline-info") }}
+     </div>
+    </form>
+</div>
+
+{% endblock content %}  
+
