@@ -7,7 +7,7 @@
     <form method="post" ,action=""> <!--action with empty string means it is gonna post info  back to same mehtod -->
      {{ form.hidden_tag() }} <!--the form.hidden tag method used to add CSRF token to protect form from attacks -->
      <fieldset class="form-group">
-        <legend class="border-bottom mb-4 , border-top , border p-2">New Post</legend>
+        <legend class="border-bottom mb-4 , border-top , border p-2">{{ legend }}</legend>
 
         <div class="form-group">
             {{ form.title.label(class="form-control-label") }} <!--it is only printing the form lable -->
