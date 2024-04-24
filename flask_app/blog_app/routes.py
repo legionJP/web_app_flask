@@ -1,11 +1,13 @@
 
 import os 
+import secrets #for random image name 
+from PIL import Image
 from flask import  render_template,url_for , flash ,redirect , request
 from   blog_app.forms import RegistrationForm, LoginForm, UpdateAccountForm
 from  blog_app.models import User, Post
 from blog_app import app, db , bcrypt
 from flask_login import login_user, current_user, logout_user, login_required
-import secrets #for random image name 
+
 
 #making the list of dict for the post data
 posts = [
@@ -25,7 +27,7 @@ posts = [
 
 
 @app.route('/')
-@app.route('/Home') # adding the multiple route within one fun using the  decorator
+@app.route('/H+ome') # adding the multiple route within one fun using the  decorator
 def home():
     #return '<h1>Home Page</h1>'
     return render_template('home.html',posts = posts) #passing the var to template so the data of posts will be equal to post data
@@ -76,18 +78,26 @@ def logout():
     logout_user()
     return redirect(url_for('home'))
 
-#route for the account section
+#--------------------------------------------------------------------
+#func for the updating the new profile pic 
 
 def save_picture(form_picture):
     random_hex = secrets.token_hex(8) #8 bytes string 
     _,f_text = os.path.splitext(form_picture.filename) #data and filename extension #_ for f_name
     picture_fn = random_hex + f_text
     picture_path = os.path.join(app.root_path, 'static/profile_pics', picture_fn)
-    form_picture.save(picture_path)
+
+    #for converting picture in small file
+    ouput_size = (125,125)
+    i = Image.open(form_picture)
+    i.thumbnail(ouput_size)
+    i.save(picture_path)
+   # form_picture.save(picture_path)
 
     return picture_fn
+#----------------------------------------------------------------------------------
 
-
+#route for the account section
 
 @app.route('/account',methods=['GET', 'POST'])
 @login_required # decorator for login required to access the content of web..
@@ -96,7 +106,7 @@ def account():
     if form.validate_on_submit():
         if form.picture.data:
             picture_file = save_picture(form.picture.data)
-            current_user.image_file=form.picture_file            
+            current_user.image_file = picture_file         
         current_user.username=form.username.data
         current_user.email = form.email.data
         db.session.commit()
@@ -107,7 +117,7 @@ def account():
         form.email.data = current_user.email
     
 
-    image_file= url_for('static', filename='profile_pics/profile.jpg')#+ current_user.image_file)
+    image_file= url_for('static', filename='profile_pics/' + current_user.image_file)
     return render_template('account.html', title='Account', 
                            image_file=image_file, form=form) #breaking line in pep 8 compline 
 
