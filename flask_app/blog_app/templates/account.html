@@ -1,9 +1,18 @@
 
-{%extends "layout.html" %} <!-- using the layout page by extends keyword-->
+{% extends "layout.html" %} <!-- using the layout page by extends keyword-->
 
 {% block content %}<!--then overriding the content block of the for loop-->
+<div class="content-section">
+    <div class="media">
+        <img class="rounded-circle account-img"  src="{{ image_file }}" alt ="user Profile Image">
+        <!-- <img class="rounded-circle account-img" src="{{ url_for('static', filename='profile_pics/profile.jpg')}}" alt="User Profile Image"> -->
 
-<h1>{{current_user.username}}</h1>  
+        <div class="media-body">
+            <h2 class="account-heading">{{current_user.username}}</h2>
+            <p class="text-secondary">{{current_user.email}}</p>        
+        </div>
+    </div>
+</div>
 
 {% endblock content %} <!--jinja allows to put the name of block as expilicit-->
 
