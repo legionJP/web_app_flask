@@ -40,7 +40,7 @@
             <a class="navbar-dark mr-4" href="/about">about</a> -->
             <a class="nav-item nav-link text-white" href="{{ url_for('home') }}">Home</a>
             <a class="nav-item nav-link text-white" href="{{ url_for('about') }}">about</a>
-            <a class="nav-item nav-link text-white" href="/">Your Blogs</a>
+            <a class="nav-item nav-link text-white" href="{{url_for('home')}}">Your Blogs</a>
 
                 {% if current_user.is_authenticated %}
                 <a class="nav-item nav-link text-white" href="{{ url_for('new_post') }}">New Post</a>
