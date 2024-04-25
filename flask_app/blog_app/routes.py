@@ -29,7 +29,10 @@ from flask_login import login_user, current_user, logout_user, login_required
 @app.route('/')
 @app.route('/home') # adding the multiple route within one fun using the  decorator
 def home():
-    posts=Post.query.all()
+    # posts=Post.query.all()
+    page= request.args.get('page',1,type=int) #for the different page route 
+    posts=Post.query.paginate(page=page,per_page=5) #pagination  defualt on page 1
+
     return render_template('home.html',posts = posts) #passing the var to template so the data of posts will be equal to post data
 
 #------------------------------------------------------------------------------------------

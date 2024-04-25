@@ -2,7 +2,7 @@
 
 {% block content %}<!--then overriding the content block of the for loop-->
 
-    {% for post in posts %}
+     {% for post in posts %} <!--for pagination of every post item -->
     <article class="media content-section">
         <img class="rounded-circle article-img" src="{{ url_for('static', filename ='profile_pics/' + post.author.image_file)}}">
         <div class="media-body">
