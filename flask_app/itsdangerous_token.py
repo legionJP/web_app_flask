@@ -5,13 +5,13 @@
 # Same thing with any kind of activation link for accounts and similar things.
 
 from itsdangerous import URLSafeTimedSerializer,SignatureExpired
-s= URLSafeTimedSerializer('secret')
-token = s.dumps({'user_id':1},salt='verification')
+s= URLSafeTimedSerializer('secret',salt='verification')
+token = s.dumps({'your_id':12},salt='verification')
 try:
-    data = s.loads(token,max_age=60)
+    data = s.loads(token,max_age=120)
+    print(token)
     print(data)   #gives the data payload
-    token_utf8 = token.decode('utf-8')
+    token_utf8 = token.encode('utf-8')
     print(token_utf8)
-except:
-    SignatureExpired
+except SignatureExpired:
     print("The token is expired")
