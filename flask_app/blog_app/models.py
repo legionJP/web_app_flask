@@ -14,10 +14,11 @@
 '''
 In SQLAlchemy we can represents data structures as class called Models
 '''
-from blog_app import   db, login_manager #,app 
+from blog_app import   db, login_manager ,app 
 from datetime import datetime  
 from sqlalchemy.sql import func
 from flask_login import UserMixin
+from itsdangerous import URLSafeTimedSerializer,SignatureExpired , Serializer
 
 
 
@@ -40,7 +41,22 @@ class User(db.Model,UserMixin):
     posts= db.relationship('Post', backref =  'author' , lazy = True)
     # 'Post' becaue it using Post module class
     #one to many relationship and this is not column but running the query in additional
-
+#-------------------------------------------------------------------------------------------------------
+    #creating function for the token generation for password reset
+    def get_reset_token(self, expire_sec=1800):
+        s= URLSafeTimedSerializer(app.config['SECRET_KEY'],expire_sec)
+        return s.dumps({'user_id':self.id})  #user_id is the payloads
+    
+    @staticmethod      #here telling to not accept the token as a self param  but accept as token argument 
+    def verify_reset_token(token):
+        s= URLSafeTimedSerializer(app.config['SECRET_KEY'])
+        try:
+            user_id= s.loads(token)['user_id']
+        except:
+            return None
+        return User.query.get(user_id)   # we will get the user by the user_id
+    
+    
     def __repr__(self) -> str: #will return the data of the objects to how it is going to print
         return f"User('{self.username}', '{self.email}', '{self.image_file}')"
 
