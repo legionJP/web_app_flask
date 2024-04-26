@@ -1,0 +1,32 @@
+{%extends "layout.html" %}
+
+{% block content %}
+
+<div class "content-section" >
+    <form method="post" ,action=""> <!--action with empty string means it is gonna post info  back to same mehtod -->
+     {{ form.hidden_tag() }} <!--the form.hidden tag method used to add CSRF token to protect form from attacks -->
+     <fieldset class="form-group">
+        <legend class="border-bottom mb-4">Reset Password</legend>
+
+        <div class="form-group">
+            {{ form.email.label(class="form-control-label") }} <!--it is only printing the form lable -->
+            {% if form.email.errors %} <!--Error validations-->
+            {{ form.email(class="form-control form-control-lg is-invalid") }} <!--username filed-->
+            <div class="invalid-feedback">
+                {% for error in form.email.errors %}
+                <span> {{ error }}</span>
+                {% endfor %}
+            </div>
+        {% else %}
+            {{ form.email(class="form-control form-control-lg") }}    
+        {% endif %}
+        </div>
+     </fieldset>
+
+     <div class="form-group">
+        {{ form.submit(class="btn btn-outline-info") }}
+     </div>
+    </form>
+</div>
+
+{% endblock content %}
