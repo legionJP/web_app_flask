@@ -6,9 +6,9 @@
 
 from itsdangerous import URLSafeTimedSerializer,SignatureExpired
 s= URLSafeTimedSerializer('secret',salt='verification')
-token = s.dumps({'your_id':12},salt='verification')
+token = s.dumps({'your_id':12},salt='verification') #generTE THE TOKEN 
 try:
-    data = s.loads(token,max_age=120)
+    data = s.loads(token,max_age=120) #decode the token if we want to verify it 
     print(token)
     print(data)   #gives the data payload
     token_utf8 = token.encode('utf-8')
