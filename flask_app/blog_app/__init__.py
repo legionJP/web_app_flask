@@ -8,7 +8,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
-import os
+# import os
 
 
 app = Flask(__name__,template_folder='templates')
@@ -29,10 +29,16 @@ login_manager.login_message_category ='info' #login message if access account wi
 
 #Configration for email sending 
 app.config['MAIL_SERVER']= 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USER')
-app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASS')
+app.config['MAIL_PORT'] = 465
+# app.config['MAIL_USE_TLS'] = True , so port 587
+# app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USER')
+# app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASS')
+app.config['MAIL_USERNAME'] =  'newone112277@gmail.com'
+app.config['MAIL_PASSWORD'] =  'Iamdeveloping@23'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+
+
 
 mail = Mail(app)  #initializing the extension for Mail
 

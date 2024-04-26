@@ -5,3 +5,4 @@ instance/
 *.pyc
 venv
 .lesshst
+.env

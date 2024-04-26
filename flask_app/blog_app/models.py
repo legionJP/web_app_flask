@@ -15,6 +15,7 @@
 In SQLAlchemy we can represents data structures as class called Models
 '''
 from blog_app import   db, login_manager ,app 
+import time
 from datetime import datetime  
 from sqlalchemy.sql import func
 from flask_login import UserMixin
@@ -44,8 +45,8 @@ class User(db.Model,UserMixin):
 #-------------------------------------------------------------------------------------------------------
     #creating function for the token generation for password reset
     def get_reset_token(self, expire_sec=1800):
-        s= URLSafeTimedSerializer(app.config['SECRET_KEY'],expire_sec)
-        return s.dumps({'user_id':self.id})  #user_id is the payloads
+        s= URLSafeTimedSerializer(app.config['SECRET_KEY'])
+        return s.dumps({'user_id':self.id, 'exp':time.time()+expire_sec})  #user_id is the payloads
     
     @staticmethod      #here telling to not accept the token as a self param  but accept as token argument 
     def verify_reset_token(token):

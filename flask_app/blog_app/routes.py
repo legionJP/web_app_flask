@@ -202,7 +202,13 @@ def user_posts(username):
 #-----------------------------------------------------------------------------------
 def send_reset_link(user):
     token = user.get_reset_token()
+    msg= Message('Password Reset Request',sender='techworldjp02@gmail.com', recipients=[user.email]) #for subject
+    msg.body= f'''To reset your Password visit the following link:
+{url_for('reset_token',token= token,_external=True)} the link is valid for 30 Minutes. If not requested by you , simpy ignore this email '''
     
+    mail.send(msg)
+    return 'sent'
+
 
 
 @app.route('/reset_password', methods =['GET', 'POST'])
@@ -231,6 +237,13 @@ def reset_token(token):
         flash('That is inavalid or expired token', 'warning')
         return redirect(url_for('reset_request'))
     form= ResetPasswordForm
+
+    if form.validate_on_submit():
+        hashed_password= bcrypt.generate_password_hash(form.password.data).decode('utf-8') 
+        user.password =  hashed_password
+        db.session.commit()
+        flash(f'your password has been updated for {form.username.data}! now you can login ','success')
+        return redirect(url_for('login'))            
     return render_template('reset_token.html',title='Reset Password', form =form)
 
     
