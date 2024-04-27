@@ -33,8 +33,8 @@ app.config['MAIL_PORT'] = 465
 # app.config['MAIL_USE_TLS'] = True , so port 587
 # app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USER')
 # app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASS')
-app.config['MAIL_USERNAME'] =  'newone112277@gmail.com'
-app.config['MAIL_PASSWORD'] =  'Iamdeveloping@23'
+app.config['MAIL_USERNAME'] =   os.environ.get('MAIL_USER')
+app.config['MAIL_PASSWORD'] =   os.environ.get('MAIL_PASS')
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 
