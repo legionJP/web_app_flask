@@ -1,8 +1,8 @@
 
 import os
-# Sign a user ID in a URL and email it to them to unsubscribe from a newsletter. 
-# This way you don’t need to generate one-time tokens and store them in the database.
-# Same thing with any kind of activation link for accounts and similar things.
+# # Sign a user ID in a URL and email it to them to unsubscribe from a newsletter. 
+# # This way you don’t need to generate one-time tokens and store them in the database.
+# # Same thing with any kind of activation link for accounts and similar things.
 
 from itsdangerous import URLSafeTimedSerializer,SignatureExpired
 s= URLSafeTimedSerializer('secret',salt='verification')
@@ -17,6 +17,5 @@ except SignatureExpired:
     print("The token is expired")
 
 print(os.environ.get('MAIL_USER'))
-p= os.environ.get('MAIL_PASS')    
-
-print(p)
+print(os.environ.get('MAIL_PASS'))   
+ 

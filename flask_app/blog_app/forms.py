@@ -88,7 +88,7 @@ class PostForm(FlaskForm):
 
 class RequestResetForm(FlaskForm):
         email= StringField('Email', validators=[ DataRequired(),Email()])
-        submit = SubmitField('Request Reset Password!')
+        submit = SubmitField('Request Password Reset!')
 
         def validate_email(self,email):
             user = User.query.filter_by(email=email.data).first()

@@ -210,7 +210,6 @@ def send_reset_link(user):
     return 'sent'
 
 
-
 @app.route('/reset_password', methods =['GET', 'POST'])
 def reset_request():
     if current_user.is_authenticated:  #this is check if user is logged out to access the reset route 

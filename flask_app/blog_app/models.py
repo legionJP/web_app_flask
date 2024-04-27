@@ -58,7 +58,7 @@ class User(db.Model,UserMixin):
         return User.query.get(user_id)   # we will get the user by the user_id
     
     
-    def __repr__(self) -> str: #will return the data of the objects to how it is going to print
+    def __repr__(self):  #will return the data of the objects to how it is going to print
         return f"User('{self.username}', '{self.email}', '{self.image_file}')"
 
 
