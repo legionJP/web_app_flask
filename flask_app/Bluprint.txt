@@ -1,0 +1,79 @@
+#+=====================================+Blueprint+=====================================#A blueprint defines a collection of views, templates, 
+
+ 
+A blueprint defines a collection of views,
+templates, static files and other elements that can be applied to an application.
+
+The killer use-case for blueprints is to organize our application into distinct components.
+ For a Twitter-like microblog, blueprint for the website pages.
+
+This lets us structure our app as several smaller “apps” that each do one thing.
+
+
+Functional structure:
+
+yourapp/
+    __init__.py
+    static/
+    templates/
+        home/
+        control_panel/
+        admin/
+    views/
+        __init__.py
+        home.py
+        control_panel.py
+        admin.py
+    models.py
+
+#Note:
+(1).
+With the exception of yourapp/views/__init__.py, each
+of the .py files in the yourapp/views/ directory from this listing is a blueprint.
+
+(2.).
+In yourapp/__init__.py we would import those blueprints and register them on our Flask() object.
+
+# Divisional  structure: 
+
+With the divisional structure,
+ you organize the pieces of the application 
+ based on which part of the app they contribute to. 
+ All of the templates, views and static files for the admin panel go in one directory,
+and those for the user control panel go in another.
+
+yourapp/
+    __init__.py
+    admin/
+        __init__.py
+        views.py
+        static/
+        templates/
+    home/
+        __init__.py
+        views.py
+        static/
+        templates/
+    control_panel/
+        __init__.py
+        views.py
+        static/
+        templates/
+    models.py
+
+With a divisional structure each directory under yourapp/ is a separate blueprint.
+ All of the blueprints are applied to the Flask() app in the top-level __init__.py
+
+Which one is best? :
+The only difference is the way the hierarchy is represented – i.e. you can architect Flask apps with either methodology – 
+so you should choose the one that makes sense to you.
+
+
+if your app has largely independent pieces that only share things
+ like models and configuration, divisional might be the way to go.
+ An example might be a SaaS app that lets user’s build websites.
+
+ 
+ On the other hand, if the components of your app flow together a little more, 
+ it might be better represented with a functional structure.
+  An example of this would be Facebook. 

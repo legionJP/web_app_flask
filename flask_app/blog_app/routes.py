@@ -198,7 +198,7 @@ def user_posts(username):
     return render_template('user_post.html',posts = posts, user=user)  # paasing the post and user to the user_post.html template
 
 #-----------------------------------------------------------------------------------------------------
-# route for the request reset password
+#  send mail function to request reset password
 #-----------------------------------------------------------------------------------
 def send_reset_link(user):
     token = user.get_reset_token()
@@ -209,6 +209,10 @@ def send_reset_link(user):
     mail.send(msg)
     return 'sent'
 
+
+#-----------------------------------------------------------------------------------------------------
+# route for the request reset password
+#-----------------------------------------------------------------------------------
 
 @app.route('/reset_password', methods =['GET', 'POST'])
 def reset_request():
@@ -224,24 +228,24 @@ def reset_request():
     
     return render_template('reset_request.html',title='Reset Password', form= form)
 
-#-----------------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------------------------------
 
 @app.route('/reset_password/<token>', methods =['GET', 'POST'])
 def reset_token(token):
     if current_user.is_authenticated:
         return redirect(url_for('home'))
     
-    user =User.verify_reset_token(token)
+    user =User.verify_reset_token(token) 
     if user is None:
         flash('That is inavalid or expired token', 'warning')
         return redirect(url_for('reset_request'))
-    form= ResetPasswordForm
-
+    form= ResetPasswordForm()  #creating an instance of the ResetPasswordForm ,The parentheses are necessary to create a new instance of the class.
+   
     if form.validate_on_submit():
         hashed_password= bcrypt.generate_password_hash(form.password.data).decode('utf-8') 
         user.password =  hashed_password
         db.session.commit()
-        flash(f'your password has been updated for {form.username.data}! now you can login ','success')
+        flash(f'your password has been updated ,now you can login ','success')
         return redirect(url_for('login'))            
     return render_template('reset_token.html',title='Reset Password', form =form)
 
