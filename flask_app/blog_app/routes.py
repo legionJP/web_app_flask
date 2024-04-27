@@ -202,7 +202,7 @@ def user_posts(username):
 #-----------------------------------------------------------------------------------
 def send_reset_link(user):
     token = user.get_reset_token()
-    msg= Message('Password Reset Request',sender='techworldjp02@gmail.com', recipients=[user.email]) #for subject
+    msg= Message('Password Reset Request',sender='bharat_tech@outlook.com', recipients=[user.email]) #for subject
     msg.body= f'''To reset your Password visit the following link:
 {url_for('reset_token',token= token,_external=True)} the link is valid for 30 Minutes. If not requested by you , simpy ignore this email '''
     
