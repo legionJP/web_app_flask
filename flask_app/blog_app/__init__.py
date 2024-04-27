@@ -35,10 +35,17 @@ app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False 
 # app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USER')
 # app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASS')
+<<<<<<< HEAD
 app.config['MAIL_USERNAME'] =  'bharat_tech@outlook.com'
 app.config['MAIL_PASSWORD'] =  'Worldoftechishere@23'
 
 
+=======
+app.config['MAIL_USERNAME'] =   os.environ.get('MAIL_USER')
+app.config['MAIL_PASSWORD'] =   os.environ.get('MAIL_PASS')
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+>>>>>>> f5583ccaf03ee29368a21feeb1ecdffb28ee6121
 
 
 
