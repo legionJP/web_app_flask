@@ -3,7 +3,7 @@ from flask import  render_template,url_for , flash ,redirect , request,abort
 from   blog_app.posts.forms import  PostForm 
 from  blog_app.models import  Post
 from blog_app import  db 
-from flask_login import   current_user,   login_required
+from flask_login import  current_user,   login_required
 
 #-------------------------------------------------------------------
 posts = Blueprint('posts',__name__) #making the instance for the  'users' blueprint 
