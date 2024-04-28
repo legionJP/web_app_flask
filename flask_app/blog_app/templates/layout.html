@@ -38,17 +38,17 @@
             <!-- <a class="navbar-dark mr-4" href="/Home">Home</a>
             <a class="navbar-dark mr-4" href="/">Your Blogs</a>
             <a class="navbar-dark mr-4" href="/about">about</a> -->
-            <a class="nav-item nav-link text-white" href="{{ url_for('home') }}">Home</a>
-            <a class="nav-item nav-link text-white" href="{{ url_for('about') }}">about</a>
-            <a class="nav-item nav-link text-white" href="{{url_for('home')}}">Your Blogs</a>
+            <a class="nav-item nav-link text-white" href="{{ url_for('main.home') }}">Home</a>
+            <a class="nav-item nav-link text-white" href="{{ url_for('main.about') }}">about</a>
+            <a class="nav-item nav-link text-white" href="{{url_for('main.home')}}">Your Blogs</a>
 
                 {% if current_user.is_authenticated %}
-                <a class="nav-item nav-link text-white" href="{{ url_for('new_post') }}">New Post</a>
-                <a class="nav-item nav-link text-white" href="{{ url_for('account') }}">Account</a>
-                <a class="nav-item nav-link text-white" href="{{ url_for('logout') }}">Logout</a>
+                <a class="nav-item nav-link text-white" href="{{ url_for('posts.new_post') }}">New Post</a>
+                <a class="nav-item nav-link text-white" href="{{ url_for('users.account') }}">Account</a>
+                <a class="nav-item nav-link text-white" href="{{ url_for('users.logout') }}">Logout</a>
                 {% else %}
-                    <a class="nav-item nav-link text-white" href="{{ url_for('login') }}">Login</a>
-                    <a class="nav-item nav-link text-white" href="{{ url_for('register') }}">Register</a>
+                    <a class="nav-item nav-link text-white" href="{{ url_for('users.login') }}">Login</a>
+                    <a class="nav-item nav-link text-white" href="{{ url_for('users.register') }}">Register</a>
                 {% endif %} 
 
             <nav class="navbar navbar-primary bg-primary">

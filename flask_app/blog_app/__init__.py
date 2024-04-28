@@ -8,14 +8,12 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
-import os
+
+from blog_app.config import Config #
 
 
 app = Flask(__name__,template_folder='templates')
-
-app.config['SECRET_KEY'] = '571feb486e78c8e055ade270a8e5fc'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
-#/// are the relative path from the current file so site.db will be created
+app.config.from_object(Config)  #paasiing the Config object as configuration 
 
 #----------------------------------------------------------------
 #setting up the instance , and app is argument
@@ -23,24 +21,27 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 db=SQLAlchemy(app) #instance for sql db
 bcrypt = Bcrypt(app) #for password hashing 
 login_manager = LoginManager(app)
-login_manager.login_view = 'login' #setting the login route for login view to manage login required 
+login_manager.login_view = 'users.login' #setting the login route for login view to manage login required , and for blueprint case putting the users blueprint first
 login_manager.login_message_category ='info' #login message if access account without login 
 
-#-------------------------------------------------------
-#Configration for email sending 
-#-----------------------------------------------------
-app.config['MAIL_SERVER']= 'smtp.office365.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USE_SSL'] = False
-# app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USER')
-# app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASS') 
-app.config['MAIL_USERNAME'] =   #os.environ.get('MAIL_USER')
-
-app.config['MAIL_PASSWORD'] =    #os.environ.get('MAIL_PASS')
 
 mail = Mail(app)  #initializing the extension for Mail
 
 #-----------------------------------------------------------------
 # from routes import routes
-from  blog_app import routes
+# Importing the routes in Blueprint model , we have to import those blueprints objects from each of 
+#the packages and register them with our routes 
+
+from blog_app.users.routes import users  #importing the blueprint instance of users route
+app.register_blueprint(users)
+
+from blog_app.posts.routes import posts
+app.register_blueprint(posts)
+
+from blog_app.main.routes import main
+app.register_blueprint(main)
+
+# from  blog_app import routes
+
+
+#APP config from object 
