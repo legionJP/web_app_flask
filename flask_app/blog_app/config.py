@@ -16,8 +16,8 @@ class Config:
     MAIL_USE_TLS = True
     MAIL_USE_SSL = False
 
-    MAIL_USERNAME =   os.environ.get('MAIL_USER')
-    MAIL_PASSWORD =   os.environ.get('MAIL_PASS')
+    MAIL_USERNAME =    os.environ.get('MAIL_USER')
+    MAIL_PASSWORD =    os.environ.get('MAIL_PASS')
 
 
 #Note :  removed app.config['MAIL_USERNAME']  because we want only constant var. same name as key 
