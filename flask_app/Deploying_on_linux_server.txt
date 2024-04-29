@@ -1,0 +1,95 @@
+step 1.
+create linode :
+            choose image:
+            choose Region:
+            choose plan:
+                  linode label: flask_server
+                    add root password:
+                    optional add-ons
+                    --create the server--
+
+# step 2.
+
+got to Networking :
+                Note down the  SSH Access ip address
+                -paste the ssh command on the bash/terminal: type root password (open the two terminal one for local host and one for server)
+                                   : ssh root@45.33.123.214
+
+                 (update and upgrade the machine/server)
+                 :  then- set -hostname:
+                               ~#  hostnamectl set-hostname flask_server
+                               ~# hostname
+                                         flask_server
+
+                   (Setting up the host name in hostfile:
+                               ~#  nano /etc/hosts
+                |------------------------------------------------------------------------------|
+                 GNU nano              /etc/hosts                                     Modified |
+                 
+                 127.0.0.1         localhost
+                 45.33.123.214     flask_server                                                                                            
+
+
+
+
+                  ^X(exit)    ...     ....   ...                                               |                            
+                |------------------------------------------------------------------------------|  
+
+#================================================================================================
+                                            Step 3. 
+#=================================================================================================
+Adding the limited users to our machine, as loged in as root user , which has priviliged to run any command:
+                             
+                        root@localhost:~#        adduser user1
+                        root@localhost:~#        type password :
+                                                     confirm_ pass and add additonla info
+                        #add user to group:
+                                root@localhost:~#    adduser user1 sudo 
+                        (now logout as root and login as user1 )
+                                                : logout
+                                                :ssh user1@ 45.33.123.214 
+
+#================================================================================================
+                                            Step 4. 
+#=================================================================================================
+ Adding the ssh authentication key insteda of the password bcz. it can't be brute froced
+ #1 make a .ssh directory within home directory
+                                       :~$  mkdir .ssh
+ #2. now open the terminal with the local machine, (can open terminal where  app environment is enabled)
+
+                                      ~$   ssh-keygen -b 4096
+                                      (generating public/private key pair)  
+                                      (/.ssh/id_rsa.pub)            
+
+#3. Moving the public key to server on bash use 'scp' command:
+                                       $  scp ~/.shh?id_rsa.pub user1@45.33.123.214:~.ssh/authrized_keys 
+                                         (saving it on user1's home directory)
+
+                                    check the key on server terminal
+                                       $  ls .ssh
+
+# 4. setting the permission for the ssh directory, where owner of directory has the read write permissions:
+
+                                     $ sudo chmod 700 ~/.ssh/
+                                     $ password for user1:
+                                     $ sudo chmod 600 ~/.ssh*
+
+                                     exit()
+
+   #700 permission: 7read/write, 0 for group - 0 permission, 0- for others                                     
+
+
+
+
+
+
+
+
+
+    
+                                            
+
+
+
+
+                                            
