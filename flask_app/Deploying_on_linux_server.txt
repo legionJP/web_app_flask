@@ -1,4 +1,8 @@
-step 1.
+                            _______________________________________ 
+                             SETTING UP THE SERVER FOR DEPLOYMENT
+#================================================================================================
+                                            Step 1. 
+#=================================================================================================
 create linode :
             choose image:
             choose Region:
@@ -8,7 +12,9 @@ create linode :
                     optional add-ons
                     --create the server--
 
-# step 2.
+#================================================================================================
+                                            Step 2. 
+#=================================================================================================
 
 got to Networking :
                 Note down the  SSH Access ip address
@@ -23,16 +29,17 @@ got to Networking :
 
                    (Setting up the host name in hostfile:
                                ~#  nano /etc/hosts
+
                 |------------------------------------------------------------------------------|
                  GNU nano              /etc/hosts                                     Modified |
-                 
+                ________________________________________________________________________________ 
                  127.0.0.1         localhost
                  45.33.123.214     flask_server                                                                                            
 
 
 
 
-                  ^X(exit)    ...     ....   ...                                               |                            
+                |  ^X(exit)    ...     ....   ...                                              |                            
                 |------------------------------------------------------------------------------|  
 
 #================================================================================================
@@ -77,17 +84,135 @@ Adding the limited users to our machine, as loged in as root user , which has pr
                                      exit()
 
    #700 permission: 7read/write, 0 for group - 0 permission, 0- for others                                     
+ # on a local machine signing using the ssh key: 
+                                          ssh user1@45.33.123.214
+
+#================================================================================================
+                                            Step 5. 
+#=================================================================================================
+# dis-allowing the root login in ssh :
+                                    $ sudo nano /etc/ssh/sshd_config
+                                
+                |------------------------------------------------------------------------------|
+                 GNU nano 2.9.8             /etc/ssh/sshd_config                      Modified |
+                ________________________________________________________________________________ 
+                  
+                  #scroll down and change the permission on permitlogin root and uncomment password authentication phrase
+
+                  PermitRootLogin         no
+                  PasswordAuthentication  no
 
 
 
+                |  ^X(exit)    ...     ....   ...                                              |                            
+                |------------------------------------------------------------------------------|  
 
-
-
-
-
-
-    
+#restrat the ssh server by using :
+                            $  sudo systemctl restrat sshd_config   
                                             
+#================================================================================================
+                                            Step 6. 
+#=================================================================================================
+
+#Setting up the firewall 
+                        $ sudo apt install ufw  
+                         (uncomplicated fire-wall)
+
+#change policies like allow incoming traffic:
+
+                              $ sudo ufw default allow outgoing 
+                              $ sudo ufw default deny incoming
+                           
+# configuring the allow rule for certain ports:
+                              $ sudo ufw allow ssh
+                              (allow port for the ssh ) 
+                              $ sudo ufw allow 5000
+                              (allow server for port 5000 to run flask before deploy.)
+
+# alow port 80 and http traffic after every thing is working as wanted 
+
+# enable the avobe rules and traffic :
+                               $ sudo ufw enable
+
+                               $ suod ufw status
+______________________________________________________________________________________________________
+  
+                                     _____________________________ 
+                                     PUTTING THE APP ON THE SERVER                              
+#================================================================================================
+                                            Step . 1
+#=================================================================================================
+
+# simply can git clone the repositry on the server
+
+# In command line  on local machine using the bash:
+
+#(1) using the virtual environment so make the requirement.txt , (see the dependecies by pip freeze)
+  
+#2. create requirement.txt and put inside the project directory:
+                           $ pip freeze > requirement.txt
+ 
+#3. Moving the project directory on the server in user1 home dir.:
+                          $ scp -r Desktop/flask_app user1@45.123.214:/ 
+
+#4. checking that it is on the server, go on the server terminal:
+                                       $ ls (seet the dir.)        
+
+
+#================================================================================================
+                                            Step . 2
+#=================================================================================================
+
+#creating the virtual environment on the server:
+ #(1) 1. Install python 3 ,and Install python venv to create virtual environment:
+
+                                          $ sudo apt install python3 -pip 
+                                          $ sudo apt install python3 -venv
+
+ #2. create the virtual environment inside the flask project with desired dir. location:
+
+                                          $ python3 -m venv flask_app/venv
+                                          $ cd flask_app
+                                          $ ls
+
+#3. Activating the virtual environment :
+
+                     user1@flask_server:-/flask_app $ source venv/bin/activate
+              (venv) user1@flask_server:-/flask_app $    .
+
+#4. Then installing the requirement.txt dependecies:
+                                                  $ pip install -r requirement.txt 
+                                                  (installed all the packages)
+
+#================================================================================================
+                                            Step . 3
+#================================================================================================= 
+
+#Setting up the environment variables on the servers:
+ #for this we will create the config file and load that into application insted of environment variables
+
+#1. getting the environment variables in flask_environment running using the python:
+                                 $ python
+                                 >>> import os 
+                                 >>> os.environ.get('SECRET_KEY')
+                                 '....................'  
+                                 >>> os.environ.get('SQLALCHEMYDATABASE_URI')
+                                 'sqlite:///site.db' 
+                                 >>> os.environ.get('EMAIL_USER')
+                                 'myemail@gmail.com' 
+                                 >>> os.environ.get('EMAIL_PASS')
+                                 'MYPASS@123' 
+
+#2. create the file for configuration using /config.json or .yml:
+                                $ touch config.json                                                                
+
+
+
+
+                                      
+
+
+
 
 
 
