@@ -257,7 +257,7 @@ sudo ufw allow http/tcp
 
 
 sudo ufw delete allow 5000
-sudo ufw allow  enable 
+sudo ufw  enable 
 
 #restart the nginx 
 sudo systemctl restart nginx
@@ -265,6 +265,12 @@ sudo systemctl restart nginx
 
 #running the gunicorn 
 gunicorn -w 31 run:app
+
+#for listinig to the all ports and ,
+# to avoid the gunicorn woker process in consloe and run it in background usin &
+
+gunicorn -w 31 -b 0.0.0.0:8000 run:app &
+
 
 #here -w is worker , which should be : Number of worker should be- (2 * num_cores)+1 
 
