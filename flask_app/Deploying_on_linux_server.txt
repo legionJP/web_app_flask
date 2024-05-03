@@ -55,11 +55,11 @@ Adding the limited users to our machine, as loged in as root user , which has pr
                         (now logout as root and login as user1 )
                                                 : logout
                                                 :ssh user1@ 45.33.123.214 
-
+#in aws no not required above step because you are login as ubuntu which is not a root 
 #================================================================================================
                                             Step 4. 
 #=================================================================================================
- Adding the ssh authentication key insteda of the password bcz. it can't be brute froced
+ Adding the ssh authentication key instead of the password bcz. it can't be brute froced
  #1 make a .ssh directory within home directory
                                        :~$  mkdir .ssh
  #2. now open the terminal with the local machine, (can open terminal where  app environment is enabled)
@@ -156,7 +156,7 @@ ________________________________________________________________________________
                           $ scp -r Desktop/flask_app user1@45.123.214:/ 
 
 #4. checking that it is on the server, go on the server terminal:
-                                       $ ls (seet the dir.)        
+                                       $ ls (see the dir.)        
 
 
 #================================================================================================
@@ -208,13 +208,65 @@ ________________________________________________________________________________
 
 
 
-
-                                      
-
+                                  
 
 
 
 
 
+______________________________________________________________________________________________________
+  
+          ________________________________________________________ 
+     using the  engine-x and G-unicorn SERVER or WSGI server for production deployment                             
+#================================================================================================
+                                            Step . 1
+#=================================================================================================
 
-                                            
+sudo apt install nginx
+
+pip install gunicorn
+
+
+#updating the config file for the nginx 
+nginx will be the web server  will hnlde the static file , html, css 
+and G unicorn will handle the python file
+
+#removing the default nginx
+sudo rm /etc/nginx/sites-enabled/default
+
+# Adding the file 
+ sudo nano /etc/nginx/sites-enabled/flaskblog
+
+
+server{ 
+       listen 80; 
+       server_name 52.66.25.191;
+
+       location /static {
+               alias /home/ubuntu/web_app_flask/flask_app/blog_app/static;
+       } 
+
+       location / { 
+              proxy_pass http://localhost:8000;
+              include /etc/nginx/proxy_params;
+              proxy_redirect off;
+       }
+}
+
+sudo ufw allow http/tcp
+
+
+sudo ufw delete allow 5000
+sudo ufw allow  enable 
+
+#restart the nginx 
+sudo systemctl restart nginx
+
+
+#running the gunicorn 
+gunicorn -w 31 run:app
+
+#here -w is worker , which should be : Number of worker should be- (2 * num_cores)+1 
+
+#see the number of cores on linux 
+nproc --all

@@ -5,6 +5,7 @@ from PIL import Image
 from blog_app import  mail 
 from flask_mail import Message
 from flask import  url_for,current_app 
+from smtplib import SMTPServerDisconnected
 #removing 'app' and importing the current app which is inside of our flask package.
 #app import is no longer needed because it doesn't exits because we have put it inside of the create_app
 
@@ -37,9 +38,11 @@ def send_reset_link(user):
     msg= Message('Password Reset Request',sender='bharat_tech@outlook.com', recipients=[user.email]) #for subject
     msg.body= f'''To reset your Password visit the following link:
 {url_for('users.reset_token',token= token,_external=True)} the link is valid for 30 Minutes. If not requested by you , simpy ignore this email '''
-    
-    mail.send(msg)
-    return 'sent'
+    try:
+        mail.send(msg)
+        return 'sent'
+    except SMTPServerDisconnected:
+        print("Server is Disconnected , Email can't be sent , Please try again! ")
 
 
     

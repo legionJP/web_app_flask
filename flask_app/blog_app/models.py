@@ -13,7 +13,7 @@
 #================================================================================================#
 '''
 In SQLAlchemy we can represents data structures as class called Models
-'''
+''' 
 from blog_app import   db, login_manager 
 from flask import current_app #removing 'app' and importing the current app which is inside of our flask package
 import time
