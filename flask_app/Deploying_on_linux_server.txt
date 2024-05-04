@@ -269,10 +269,49 @@ gunicorn -w 31 run:app
 #for listinig to the all ports and ,
 # to avoid the gunicorn woker process in consloe and run it in background usin &
 
-gunicorn -w 31 -b 0.0.0.0:8000 run:app &
+gunicorn -w 3 -b 0.0.0.0:8000 run:app &
 
+#someusefull command :
 
+sudo lsof -i:8000
+sudo kill -9 <PID>
 #here -w is worker , which should be : Number of worker should be- (2 * num_cores)+1 
 
 #see the number of cores on linux 
 nproc --all
+
+
+
+ 
+sudo nano /etc/supervisor/conf.d/flaskblog.conf  
+#====================================================================
+
+[program:flaskblog]
+ directory=/home/ubuntu/web_app_flask/flask_app
+ command=/home/ubuntu/web_app_flask/flask_app/env/bin/guincorn -w 3 run:app
+ user=ubuntu
+ autostart=true
+ autorestart=true
+ stopasgroup=true
+ killasgroup=true
+ stderr_logfile=/var/log/flaskblog/flaskblog.err.log
+ stdout_logfile=/var/log/flaskblog/flaskblog.out.log
+
+#make the error log file directory than files
+
+sudo mkdir -p /var/log/flaskblog
+
+sudo touch /var/log/flaskblog/flaskblog.err.log
+
+sudo touch /var/log/flaskblog/flaskblog.out.log
+
+#reload the supervisor 
+
+sudo supervisorctl reload
+ 
+sudo supervisorctl stop myproject_gunicorn
+
+
+sudo supervisorctl restart myproject_gunicorn
+
+sudo supervisorctl restart all
