@@ -271,6 +271,11 @@ gunicorn -w 31 run:app
 
 gunicorn -w 3 -b 0.0.0.0:8000 run:app &
 
+
+#kill the guincorn 
+pkill -f gunicorn
+
+
 #someusefull command :
 
 sudo lsof -i:8000
@@ -300,6 +305,9 @@ sudo nano /etc/supervisor/conf.d/flaskblog.conf
 #make the error log file directory than files
 
 sudo mkdir -p /var/log/flaskblog
+
+#give the permission :
+sudo chown -R user:group /var/log/flaskblog
 
 sudo touch /var/log/flaskblog/flaskblog.err.log
 
