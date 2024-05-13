@@ -60,6 +60,7 @@ Adding the limited users to our machine, as loged in as root user , which has pr
                                             Step 4. 
 #=================================================================================================
  Adding the ssh authentication key instead of the password bcz. it can't be brute froced
+ #this step is needed if the key_pair is not generated , in aws you can generated and download the key pair 
  #1 make a .ssh directory within home directory
                                        :~$  mkdir .ssh
  #2. now open the terminal with the local machine, (can open terminal where  app environment is enabled)
@@ -69,7 +70,7 @@ Adding the limited users to our machine, as loged in as root user , which has pr
                                       (/.ssh/id_rsa.pub)            
 
 #3. Moving the public key to server on bash use 'scp' command:
-                                       $  scp ~/.shh?id_rsa.pub user1@45.33.123.214:~.ssh/authrized_keys 
+                                       $  scp ~/.shh/id_rsa.pub user1@45.33.123.214:~.ssh/authrized_keys 
                                          (saving it on user1's home directory)
 
                                     check the key on server terminal
